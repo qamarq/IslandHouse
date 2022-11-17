@@ -23,3 +23,35 @@ body {
   line-height: 1;
   background: linear-gradient(67.32deg, #000000 0%, #002255 100%);
 }
+
+.container {
+  max-width: 130rem;
+  padding: 15rem 3.2rem;
+  margin: 0 auto;
+}
+
+.heading-secondary {
+  color: #cccccc;
+  font-weight: 500;
+  font-size: 2.4rem;
+}
+
+.btn-cta {
+  &:link,
+  &:visited {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 1.2rem 7rem;
+    font-size: 2rem;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #ffb82a;
+    transition: all 0.3s;
+  }
+
+  &:hover,
+  &:active {
+    background-color: darken(#ffb82a, 12%);
+  }
+}
