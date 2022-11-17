@@ -1,9 +1,0 @@
-@mixin flex-center($halign: center, $walign: center, $column: false) {
-    display: flex;
-    align-items: $halign;
-    justify-content: $walign;
-
-    @if $column == true {
-        flex-direction: column;
-    }
-}

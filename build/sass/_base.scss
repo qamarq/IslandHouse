@@ -1,0 +1,37 @@
+/* Font sizes (px)
+   10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+ 
+   Spacing system (px)
+   2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  background: linear-gradient(67.32deg, #000000 0%, #002255 100%);
+}
+
+.heading-primary {
+  background: radial-gradient(50% 50% at 50% 50%, #1eeeff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  &__span {
+    display: block;
+  }
+}
