@@ -21,19 +21,21 @@
     list-style: none;
   }
 
-  &__link:link,
-  &__link:visited {
-    display: inline-block;
-    padding: 0.8rem 3.2rem;
-    background-color: rgba(255, 255, 255, 0.03);
-    font-size: 1.8rem;
-    border-radius: 20px;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.3s;
-  }
-  &__link:hover,
-  &__link:active {
-    background-color: rgba(255, 255, 255, 0.1);
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block;
+      padding: 0.8rem 3.2rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      font-size: 1.8rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.3s;
+    }
+    &:hover,
+    &:active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 }

@@ -23,15 +23,3 @@ body {
   line-height: 1;
   background: linear-gradient(67.32deg, #000000 0%, #002255 100%);
 }
-
-.heading-primary {
-  background: radial-gradient(50% 50% at 50% 50%, #1eeeff 0%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-
-  &__span {
-    display: block;
-  }
-}

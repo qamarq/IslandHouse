@@ -1,0 +1,31 @@
+.section-featured {
+  padding: 1.6rem;
+  background-color: rgba(0, 7, 17, 0.2);
+}
+
+.featured {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  margin: 0 auto;
+  max-width: 130rem;
+  padding: 0 3.2rem;
+
+  &__img {
+    width: 25rem;
+    filter: saturate(1%);
+
+    &:nth-child(1) {
+      width: 25rem;
+      justify-self: start;
+    }
+    &:nth-child(2) {
+      width: 25rem;
+      justify-self: center;
+    }
+    &:nth-child(3) {
+      width: 25rem;
+      justify-self: end;
+    }
+  }
+}
