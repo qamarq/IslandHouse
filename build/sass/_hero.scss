@@ -2,6 +2,7 @@
   height: calc(100vh - 14rem);
   text-align: center;
   padding-top: 12rem;
+  position: relative;
 }
 
 .heading-primary {
@@ -22,4 +23,45 @@
   font-size: 2.4rem;
   margin-bottom: 3.2rem;
   letter-spacing: 1px;
+}
+
+.bubble {
+  width: 8rem;
+  height: 15rem;
+  position: relative;
+  img {
+    width: 25px;
+    height: 25px;
+    transform: translatey(0px);
+	  animation: float 6s ease-in-out infinite;
+    &:nth-child(1) {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      animation-delay: 0.5s;
+    }
+    &:nth-child(3) {
+      position: absolute;
+      bottom: 1rem;
+      right: 2.5rem;
+      animation-delay: 1s;
+    }
+  }
+  &__left {
+    position: absolute;
+    top: 30rem;
+    left: 20%;
+    rotate: 180deg;
+  }
+  &__right {
+    position: absolute;
+    top: 30rem;
+    right: 20%;
+  }
 }

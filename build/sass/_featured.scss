@@ -12,6 +12,7 @@
   padding: 0 3.2rem;
 
   &__img {
+    transition: all .5s;
     width: 25rem;
     filter: saturate(1%);
 
@@ -26,6 +27,9 @@
     &:nth-child(3) {
       width: 25rem;
       justify-self: end;
+    }
+    &:hover {
+      filter: saturate(100%);
     }
   }
 }
