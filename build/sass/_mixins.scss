@@ -1,0 +1,6 @@
+@mixin gradient {
+  background: radial-gradient(50% 50% at 50% 50%, #1eeeff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

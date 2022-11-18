@@ -6,10 +6,7 @@
 }
 
 .heading-primary {
-  background: radial-gradient(50% 50% at 50% 50%, #1eeeff 0%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  @include gradient;
   font-size: 8rem;
   margin-bottom: 2.4rem;
   line-height: 1.18;
@@ -30,38 +27,34 @@
   height: 15rem;
   position: relative;
   img {
-    width: 25px;
-    height: 25px;
-    transform: translatey(0px);
-	  animation: float 6s ease-in-out infinite;
+    position: absolute;
+    animation: float 6s ease-in-out infinite;
+
     &:nth-child(1) {
-      position: absolute;
       top: 0;
       right: 1rem;
       animation-delay: 0s;
     }
     &:nth-child(2) {
-      position: absolute;
       top: 4rem;
       left: 0;
       animation-delay: 0.5s;
     }
     &:nth-child(3) {
-      position: absolute;
       bottom: 1rem;
-      right: 2.5rem;
+      right: 2rem;
       animation-delay: 1s;
     }
   }
   &__left {
     position: absolute;
     top: 30rem;
-    left: 20%;
+    left: 25%;
     rotate: 180deg;
   }
   &__right {
     position: absolute;
     top: 30rem;
-    right: 20%;
+    right: 25%;
   }
 }
