@@ -21,7 +21,7 @@
 
   &__img {
     width: 50%;
-    animation: float 6s ease-in-out infinite;
+    // animation: float 6s ease-in-out infinite;
   }
 
   &__right {
@@ -30,7 +30,7 @@
         rotateY(0deg) 
         scale(0.9)
         rotateX(0deg);
-    transition: 0.6s ease all;
+    transition: 1.5s ease all;
     text-align: center;
   }
   &:hover &__right { 
