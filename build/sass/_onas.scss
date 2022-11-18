@@ -24,9 +24,24 @@
 
   &__img {
     width: 50%;
+    animation: float 6s ease-in-out infinite;
   }
 
   &__right {
+    transform:
+        perspective(800px)
+        rotateY(0deg) 
+        scale(0.9)
+        rotateX(0deg);
+    transition: 0.6s ease all;
     text-align: center;
+  }
+  &:hover &__right { 
+    transform:
+      perspective(800px)
+      rotateY(15deg)
+      rotateX(10deg)
+      rotate(15deg)
+      scale(1);
   }
 }

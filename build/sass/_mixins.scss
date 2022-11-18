@@ -4,3 +4,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+@mixin gradient_offer_card {
+  background: rgb(29,42,255);
+  background: linear-gradient(65deg, rgba(29,42,255,1) 0%, rgba(0,5,88,1) 100%);
+}
