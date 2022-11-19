@@ -211,8 +211,10 @@
     line-height: 1.7;
   }
 
-  &__graphic {
-    // text-align: center;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   &__img {
