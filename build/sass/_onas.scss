@@ -1,6 +1,7 @@
 .onas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 15rem;
 
   &__text {
     font-size: 5.2rem;
@@ -13,32 +14,224 @@
     }
 
     &--big {
-      @include gradient;
+      @include gradient_text;
       font-size: 6.2rem;
       font-weight: 700;
     }
   }
 
   &__img {
-    width: 50%;
-    // animation: float 6s ease-in-out infinite;
+    width: 55%;
+    animation: float 6s ease-in-out infinite;
   }
 
   &__right {
-    transform:
-        perspective(800px)
-        rotateY(0deg) 
-        scale(0.9)
-        rotateX(0deg);
-    transition: 1.5s ease all;
+    // transform: perspective(800px) rotateY(0deg) scale(0.9) rotateX(0deg);
+    // transition: 1.5s ease all;
+    text-align: end;
+  }
+  // &:hover &__right {
+  //   transform: perspective(800px) rotateY(15deg) rotateX(10deg) rotate(15deg)
+  //     scale(1);
+  // }
+}
+
+.offer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4.8rem;
+  margin-bottom: 15rem;
+
+  &__box {
+    position: relative;
+    width: 25rem;
+    height: 30rem;
+    border-radius: 20px;
+    overflow: hidden;
+    @include gradient_offer_card;
+    transition: 0.3s all;
+
+    &--active {
+      width: 30rem;
+      height: 35rem;
+
+      .offer__text {
+        font-size: 2.8rem;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__shell {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    // background-color: rgba(255, 255, 255, 0.04);
+    z-index: 1000;
+  }
+
+  &__content {
     text-align: center;
   }
-  &:hover &__right { 
-    transform:
-      perspective(800px)
-      rotateY(15deg)
-      rotateX(10deg)
-      rotate(15deg)
-      scale(1);
+
+  &__text {
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 3.2rem;
+  }
+
+  &__span {
+    display: block;
+  }
+  // display: grid;
+  // grid-template-columns: repeat(3, 1fr);
+  // justify-items: center;
+  // align-items: center;
+
+  // &__box {
+  //   @include gradient_offer_card;
+  //   width: 65%;
+  //   border-radius: 30px;
+  //   position: relative;
+  //   height: max-content;
+  //   cursor: pointer;
+
+  //   // transform:
+  //   //     perspective(800px)
+  //   //     rotateY(15deg)
+  //   //     scale(0.9)
+  //   //     rotateX(10deg);
+  //   // filter: blur(2px);
+  //   // opacity: 0.5;
+  //   // transition: 0.6s ease all;
+
+  //   transform: perspective(800px) rotateY(0deg) scale(0.9) rotateX(0deg);
+  //   opacity: 0.5;
+  //   transition: 0.6s ease all;
+
+  //   &-header {
+  //     height: 120px;
+  //     position: relative;
+
+  //     img {
+  //       width: 100%;
+  //       height: 100%;
+  //       object-fit: cover;
+  //       border-top-left-radius: 30px;
+  //       border-top-right-radius: 30px;
+  //     }
+
+  //     &::before {
+  //       content: "";
+  //       position: absolute;
+  //       transition: all 0.5s;
+  //       top: 0;
+  //       left: 0;
+  //       width: 100%;
+  //       height: 100%;
+  //       background-color: rgba(0, 20, 50, 0.699);
+  //       border-top-left-radius: 30px;
+  //       border-top-right-radius: 30px;
+  //     }
+  //   }
+
+  //   &-content {
+  //     height: 170px;
+  //     display: flex;
+  //     justify-content: center;
+
+  //     h1 {
+  //       font-size: 2.5rem;
+  //       font-weight: 500;
+  //       padding: 30px;
+  //       text-align: center;
+  //     }
+  //   }
+
+  //   &.active {
+  //     width: 80%;
+  //   }
+  //   &.active &-header {
+  //     height: 170px;
+  //   }
+  //   &.active &-content {
+  //     height: 170px;
+  //   }
+
+  //   &:hover {
+  //     // transform:
+  //     //     perspective(800px)
+  //     //     rotateY(-15deg)
+  //     //     translateY(-50px)
+  //     //     rotateX(10deg)
+  //     //     scale(1);
+  //     // filter: blur(0);
+  //     // opacity: 1;
+  //     transform: perspective(800px) rotateY(15deg) translateY(-50px)
+  //       rotateX(10deg) scale(1);
+  //     opacity: 1;
+  //   }
+  //   &:hover &-header {
+  //     &::before {
+  //       background-color: rgba(0, 20, 50, 0.103);
+  //     }
+  //   }
+  // }
+}
+
+.patternz {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15rem;
+  margin-bottom: 15rem;
+
+  &__block {
+    width: 60px;
+    height: 6px;
+    background: linear-gradient(90deg, #c0e5ff 0%, #36abff 100%);
+    border-radius: 5px;
+    margin-bottom: 1.2rem;
+  }
+
+  &__text {
+    font-size: 2.4rem;
+    margin-bottom: 1.4rem;
+    // width: 40rem;
+    line-height: 1.7;
+  }
+
+  &__graphic {
+    // text-align: center;
+  }
+
+  &__img {
+    width: 100%;
+  }
+}
+
+.prototype {
+  text-align: center;
+  margin-bottom: 15rem;
+
+  &__text {
+    font-size: 2.6rem;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    margin-bottom: 3.2rem;
+  }
+
+  &__graphic {
+    margin-bottom: 8.6rem;
   }
 }

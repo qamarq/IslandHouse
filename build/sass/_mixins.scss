@@ -1,4 +1,4 @@
-@mixin gradient {
+@mixin gradient_text {
   background: radial-gradient(50% 50% at 50% 50%, #1eeeff 0%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -6,6 +6,10 @@
 }
 
 @mixin gradient_offer_card {
-  background: rgb(29,42,255);
-  background: linear-gradient(65deg, rgba(29,42,255,1) 0%, rgba(0,5,88,1) 100%);
+  background: rgb(29, 42, 255);
+  background: linear-gradient(
+    65deg,
+    rgba(29, 42, 255, 1) 0%,
+    rgba(0, 5, 88, 1) 100%
+  );
 }

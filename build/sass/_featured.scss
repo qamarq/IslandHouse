@@ -4,15 +4,18 @@
 }
 
 .featured {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  // display: grid;
+  // grid-template-columns: repeat(3, 1fr);
+  // align-items: center;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   margin: 0 auto;
   max-width: 130rem;
   padding: 0 3.2rem;
 
   &__img {
-    transition: all .5s;
+    transition: all 0.5s;
     width: 25rem;
     filter: saturate(1%);
 
