@@ -1,0 +1,176 @@
+.contact {
+    margin-top: 50px;
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &__card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 25px;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        ul{
+            display: flex;
+            margin-bottom: 80px;
+        }
+        ul li{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        ul li .icon{
+            font-size: 35px;
+            color: #1eeeff;
+            margin: 0 60px;
+        }
+        ul li .text{
+            font-size: 14px;
+            font-weight: 600;
+            color: #1eeeff;
+        }
+        
+        ul li .progress{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            margin: 14px 0;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            position: relative;
+            cursor: pointer;
+        }
+        .progress::after{
+            content: " ";
+            position: absolute;
+            width: 125px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.05);
+            right: 30px;
+        }
+        .one::after{
+            width: 0;
+            height: 0;
+        }
+        ul li .progress .uil{
+            display: none;
+        }
+        ul li .progress p{
+            font-size: 13px;
+        }
+        
+        ul li .active{
+            background-color: #ffb82a;
+            display: grid;
+            place-items: center;
+        }
+        li .active::after{
+            background-color: #ffb82a;
+        }
+        ul li .active p{
+            display: none;
+        }
+        ul li .active .uil{
+            font-size: 20px;
+            display: flex;
+        }
+        
+        @media (max-width: 980px) {
+            ul{
+                flex-direction: column;
+            }
+            ul li{
+                flex-direction: row;
+            }
+            ul li .progress{
+                margin: 0 30px;
+            }
+            .progress::after{
+                width: 5px;
+                height: 55px;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: -1;
+            }
+            .one::after{
+                height: 0;
+            }
+            ul li .icon{
+                margin: 15px 0;
+            }
+        }
+        
+        @media (max-width:600px) {
+            .head .head_1{
+                font-size: 24px;
+            }
+            .head .head_2{
+                font-size: 16px;
+            }
+        }
+        
+
+        &-steps {height: 300px;}
+        &-step {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+
+            .input {
+                width: 100%;
+                margin-right: 30px;
+                margin-bottom: 15px;
+            }
+
+            &__item--cards {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+
+                &-card {
+                    background-color: rgba(255, 255, 255, 0.05);
+                    border-radius: 25px;
+                    display: flex;
+                    align-items: center;
+                    padding: 20px;
+                    cursor: pointer;
+                    transition: all .3s;
+                    
+                    i {
+                        font-size: 20px;
+                    }
+
+                    p {
+                        font-size: 17px;
+                        font-weight: 500;
+                        margin-left: 15px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.1);
+                    }
+
+                    &.active {
+                        background-color: #1eeeff;
+                        color: #002255;
+                    }
+                }
+            }
+        }
+    }
+
+    &__bottom-btns .btn-cta__div {
+        margin: 0 20px;
+        user-select: none;
+    }
+}
