@@ -56,6 +56,10 @@ const cards = ['name-review', 'needs', 'price', 'contacts'];
 let rememberActive = 1;
 
 $("#next").click(function () {
+    if ($("#next").text() == "Zakończ") {
+        showDoneScreen();
+        return
+    }
     if (rememberActive > 0) {
         $('#back').fadeIn()
     } else {
@@ -154,15 +158,13 @@ function showDoneScreen() {
     $('ul').fadeOut(function() {
         $('.contact__card-steps').css('height', '500px');
     })
-    setTimeout(function() {
-        player.play()
-    }, 500);
-    let confetti = new Confetti('lottie-player');
-
-    // Edit given parameters
+    let confetti = new Confetti("confetti-body");
     confetti.setCount(75);
     confetti.setSize(1);
     confetti.setPower(25);
     confetti.setFade(false);
-    confetti.destroyTarget(true);
+    setTimeout(function() {
+        player.play()
+        $('#confetti-body').click();
+    }, 500);
 }

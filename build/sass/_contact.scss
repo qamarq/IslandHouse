@@ -139,6 +139,11 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
+
+                .confetti-body {
+                    width: 10px;
+                    height: 10px;
+                }
             }
 
             &__item--cards {
