@@ -1,3 +1,25 @@
+const allLinks = document.querySelectorAll("a:link");
+
+allLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const href = link.getAttribute("href");
+
+        // Scroll back to top
+        if (href === "#")
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+
+        // Scroll to other links
+        if (href !== "#" && href.startsWith("#")) {
+            const sectionEl = document.querySelector(href);
+            sectionEl.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
 const one = document.querySelector(".one");
 const two = document.querySelector(".two");
 const three = document.querySelector(".three");
@@ -33,7 +55,12 @@ const items = ['one', 'two', 'three', 'four'];
 const cards = ['name-review', 'needs', 'price', 'contacts'];
 let rememberActive = 1;
 
-$("#next").on("click", function() {
+$("#next").click(function () {
+    if (rememberActive > 0) {
+        $('#back').fadeIn()
+    } else {
+        $('#back').fadeOut()
+    }
     items.forEach((item, index) => {
         $('.'+item).removeClass("active");
     });
@@ -49,6 +76,11 @@ $("#next").on("click", function() {
         cards.forEach((item, index) => {
             if (index == rememberActive-1) {
                 $('.'+item).fadeIn();
+                if (index == 3) {
+                    $("#next").text("Zakończ")
+                } else {
+                    $("#next").text("Dalej")
+                }
             }
         });
     }, 350);
@@ -57,7 +89,14 @@ $("#next").on("click", function() {
     }
 })
 
-$("#back").on("click", function() {
+$("#back").click(function () {
+    console.log(rememberActive)
+    if (rememberActive > 2) {
+        $('#back').fadeIn()
+    } else {
+        $('#back').fadeOut()
+    }
+    $("#next").text("Dalej")
     items.forEach((item, index) => {
         $('.'+item).removeClass("active");
     });
@@ -104,3 +143,26 @@ $('#show_contact_btn').click(function () {
         }, 2000);
     });
 });
+
+function showDoneScreen() {
+    const player = document.querySelector("lottie-player");
+    $('.contact__card-step-done').css('display', 'flex').hide().fadeIn();
+    $('.contact__bottom-btns').fadeOut();
+    cards.forEach((item) => {
+        $('.'+item).fadeOut();
+    });
+    $('ul').fadeOut(function() {
+        $('.contact__card-steps').css('height', '500px');
+    })
+    setTimeout(function() {
+        player.play()
+    }, 500);
+    let confetti = new Confetti('lottie-player');
+
+    // Edit given parameters
+    confetti.setCount(75);
+    confetti.setSize(1);
+    confetti.setPower(25);
+    confetti.setFade(false);
+    confetti.destroyTarget(true);
+}
