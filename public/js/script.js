@@ -5,12 +5,14 @@ allLinks.forEach(function (link) {
         e.preventDefault();
         const href = link.getAttribute("href");
 
-        // Scroll back to top
-        if (href === "#")
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
+        if (href.includes("#")) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        } else {
+            window.location.href = href
+        }
 
         // Scroll to other links
         if (href !== "#" && href.startsWith("#")) {
@@ -19,37 +21,6 @@ allLinks.forEach(function (link) {
         }
     });
 });
-
-const one = document.querySelector(".one");
-const two = document.querySelector(".two");
-const three = document.querySelector(".three");
-const four = document.querySelector(".four");
-
-one.onclick = function() {
-    one.classList.add("active");
-    two.classList.remove("active");
-    three.classList.remove("active");
-    four.classList.remove("active");
-}
-
-two.onclick = function() {
-    one.classList.add("active");
-    two.classList.add("active");
-    three.classList.remove("active");
-    four.classList.remove("active");
-}
-three.onclick = function() {
-    one.classList.add("active");
-    two.classList.add("active");
-    three.classList.add("active");
-    four.classList.remove("active");
-}
-four.onclick = function() {
-    one.classList.add("active");
-    two.classList.add("active");
-    three.classList.add("active");
-    four.classList.add("active");
-}
 
 const items = ['one', 'two', 'three', 'four'];
 const cards = ['name-review', 'needs', 'price', 'contacts'];
@@ -94,7 +65,6 @@ $("#next").click(function () {
 })
 
 $("#back").click(function () {
-    console.log(rememberActive)
     if (rememberActive > 2) {
         $('#back').fadeIn()
     } else {
@@ -155,11 +125,11 @@ function showDoneScreen() {
     cards.forEach((item) => {
         $('.'+item).fadeOut();
     });
-    $('ul').fadeOut(function() {
+    $('.contact__card ul').fadeOut(function() {
         $('.contact__card-steps').css('height', '500px');
     })
     let confetti = new Confetti("confetti-body");
-    confetti.setCount(75);
+    confetti.setCount(175);
     confetti.setSize(1);
     confetti.setPower(25);
     confetti.setFade(false);
@@ -167,4 +137,30 @@ function showDoneScreen() {
         player.play()
         $('#confetti-body').click();
     }, 500);
+
+    var name = $('#name').val()
+    var email = $('#email').val()
+    var number = $('#number').val()
+    var needs = $('.needs-item.active').text()
+    var price = $('.price-item.active').text()
+    var contacts = $('.contacts-item.active').text()
+
+    var sendInfo = {
+        name: name.trim(),
+        email: email.trim(),
+        number: number.trim(),
+        needs: needs.trim(),
+        price: price.trim(),
+        contacts: contacts.trim(),
+    };
+
+    $.ajax({
+        type: "POST",
+        url: '/send-order',
+        dataType: "json",
+        data: sendInfo,
+        success: function(data) {
+            console.log(data)
+        }
+    });
 }

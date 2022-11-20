@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const passport = require('passport')
 const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
@@ -8,6 +9,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.PORT || "8000";
+
+const initializePassport = require('./modules/passport-config')
+initializePassport(passport)
 
 app.set("view engine", "ejs");
 app.use(
@@ -23,6 +27,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(bodyParser.text());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
@@ -37,4 +43,6 @@ app.listen(port, () => {
 });
 
 exports.app = app;
+exports.passport = passport;
 require("./modules/pages");
+require('./modules/api')

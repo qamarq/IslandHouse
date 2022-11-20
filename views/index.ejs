@@ -25,6 +25,7 @@
           <li><a href="#onas" class="nav__link">O nas</a></li>
           <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
           <li><a href="#kontakt" class="nav__link">Kontakt</a></li>
+          <li><a href="/dashboard" class="nav__link">Zaloguj się</a></li>
         </ul>
       </nav>
     </header>
@@ -233,7 +234,39 @@
           </div>
         </div>
       </section>
-      <section class="section-contact" id="contact">
+      <section class="section-onas" id="onas">
+        <div class="container">
+          <h2 class="heading-secondary">FAQ</h2>
+          <h3 class="heading-tertiary">Najczęstsze pytania</h3>
+          <details open>
+            <summary>
+              Pytanie numer 1
+              <i class="icon uil uil-angle-down control-icon control-icon-expand" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></i>
+              <i class="icon uil uil-angle-up control-icon control-icon-close" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></i>
+            </summary>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet possimus optio debitis quo. Exercitationem, perspiciatis!</p>
+          </details>
+
+          <details>
+            <summary>
+              Pytanie numer 2
+              <i class="icon uil uil-angle-down control-icon control-icon-expand" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></i>
+              <i class="icon uil uil-angle-up control-icon control-icon-close" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></i>
+            </summary>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptates, assumenda!</p>
+          </details>
+
+          <details>
+            <summary>
+              Pytanie numer 3
+              <i class="icon uil uil-angle-down control-icon control-icon-expand" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand-more" /></i>
+              <i class="icon uil uil-angle-up control-icon control-icon-close" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close" /></i>
+            </summary>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor repellat rerum consectetur nulla aperiam inventore commodi dolore quia est. Esse.</p>
+          </details>
+        </div>
+      </section>
+      <section class="section-contact" id="kontakt">
         <div class="container">
           <div class="contact">
             <div class="contact__main">
@@ -300,7 +333,7 @@
                     </div>
                     <div class="input">
                       <i class="icon uil uil-phone-alt"></i>
-                      <input type="tel" name="number" id="number">
+                      <input type="tel" name="number" id="number" autocomplete="tel">
                     </div>
                   </div>
                 </div>
@@ -418,11 +451,19 @@
       <section class="section-footer">
         <div class="container">
           <div class="footer">
-            <img src="img/footer.svg" alt="" srcset="">
+            <img src="img/footer.svg">
+            <div class="footer__text">
+              <a href="#">Polityka prywatności</a><div class="dot">·</div>
+              <p><strong>© 2022 IslandHouse </strong>- All rights reserved</p><div class="dot">·</div>
+              <p>Made with ❤️ by <a href="#">Kamil Marczak</a> & <a href="#">Marcin Kołpacki</a></p>
+            </div>
           </div>
         </div>
       </section>
     </main>
+    <img src="img/bg-path.svg" class="bg__path left">
+    <img src="img/bg-path.svg" class="bg__path right">
+    <img src="img/bg-path.svg" class="bg__path left">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/confetti.min.js"></script>
