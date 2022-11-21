@@ -27,6 +27,24 @@ const cards = ['name-review', 'needs', 'price', 'contacts'];
 let rememberActive = 1;
 
 $("#next").click(function () {
+    if (rememberActive == 1) {
+        var name = $('#name').val()
+        var email = $('#email').val()
+        var number = $('#number').val()
+        if (name.trim() == "" || email.trim() == "" || number.trim() == "") {return;}
+    }
+    if (rememberActive == 2) {
+        var needs = $('.needs-item.active').text()
+        if (needs.trim() == "") {return;}
+    }
+    if (rememberActive == 3) {
+        var price = $('.price-item.active').text()
+        if (price.trim() == "") {return;}
+    }
+    if (rememberActive == 4) {
+        var contacts = $('.contacts-item.active').text()
+        if (contacts.trim() == "") {return;}
+    }
     if ($("#next").text() == "Zakończ") {
         showDoneScreen();
         return

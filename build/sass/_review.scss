@@ -1,0 +1,44 @@
+.review {
+    width: 100%;
+    padding: 60px 50px;
+    background: #000916;
+    background: linear-gradient(to right, #000812 0%, #000916 100%);
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20rem;
+        align-items: center;
+        justify-items: center;
+    }
+
+    &__item {
+        background-color: #ebebeb0e;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        padding: 30px 15px;
+        height: 410px;
+
+        &-logo {
+            margin-top: 20px;
+            width: 50%;
+        }
+
+        &-desc {
+            width: 80%;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        &-islandhouse {
+            margin-top: 50px;
+            width: 25%;
+            opacity: 0.2;
+        }
+    }
+}
