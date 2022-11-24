@@ -5,28 +5,69 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>IslandHouse | Dashboard</title>
-        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+        <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
         <link rel="icon" href="img/favicon.png" />
         <link rel="stylesheet" href="css/main.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
     </head>
     <body>
         <div class="dashboard">
             <div class="dashboard__sidebar">
                 <img src="img/icon_sample.svg">
-                <div class="dashboard__sidebar-item active"><i class="icon uil uil-desktop-cloud-alt"></i></div>
-                <div class="dashboard__sidebar-item"><i class="icon uil uil-lightbulb-alt"></i></div>
-                <div class="dashboard__sidebar-item"><i class="icon uil uil-file-download-alt"></i></div>
+                <div class="dashboard__sidebar-item active"><iconify-icon icon="uil:home-alt"></iconify-icon></div>
+                <div class="dashboard__sidebar-item"><iconify-icon icon="uil:lightbulb-alt"></iconify-icon></div>
+                <div class="dashboard__sidebar-item"><iconify-icon icon="uil:envelope-minus"></iconify-icon></div>
                 <div class="space-h"></div>
-                <div class="dashboard__sidebar-item"><i class="icon uil uil-setting"></i></div>
-                <div class="dashboard__sidebar-item"><i class="icon uil uil-user-times"></i></div>
+                <div class="dashboard__sidebar-item"><iconify-icon icon="uil:setting"></iconify-icon></div>
+                <div class="dashboard__sidebar-item"><iconify-icon icon="uil:exit"></iconify-icon></div>
             </div>
             <div class="dashboard__content">
-                <div class="dashboard__content-header">
+                <!-- <div class="dashboard__content-header">
                     <h1 class="dashboard__content-header__title">Dashboard</h1>
                     <div class="space-w"></div>
-                    <div class="dashboard__content-header__item"><i class="icon uil uil-bell"></i></div>
+                    <div class="dashboard__content-header__item"><iconify-icon icon="uil:bell"></iconify-icon></div>
+                    <div class="dashboard__content-header__profile"><p>K</p></div>
+                </div> -->
+                <div class="dashboard__content-main">
+                    <div class="screen__main">
+                        
+                    </div>
                 </div>
-                <div class="dashboard__content-main"></div>
+                <div class="dashboard__content-info">
+                    <div class="dashboard__content-info__inner">
+                        <div class="dashboard__content-header__profile"><p>K</p></div>
+                        <h1 class="dashboard__content-info__inner-title">Kamil Marczak</h1>
+                        <div class="dashboard__content-info__inner-items">
+                            <div class="dashboard__content-info__inner-item">
+                                <iconify-icon icon="uil:envelope-minus"></iconify-icon>
+                            </div>
+                            <div class="dashboard__content-info__inner-item">
+                                <iconify-icon icon="uil:bell"></iconify-icon>
+                            </div>
+                            <div class="dashboard__content-info__inner-item">
+                                <iconify-icon icon="uil:calendar-alt"></iconify-icon>
+                            </div>
+                        </div>
+                        <h2 class="dashboard__content-info__inner-recent">Ostatnie</h2>
+                        <div class="dashboard__content-info__inner-recent__items">
+                            <div class="dashboard__content-info__inner-recent__item">
+                                <p class="dashboard__content-info__inner-recent__item-date">Dzisiaj</p>
+                                <h3>Spotkanie</h3>
+                                <p class="dashboard__content-info__inner-recent__item-desc">Zapraszam wszystkich Discord 18:00</p>
+                                <h5>Michał Jabczyński</h5>
+                            </div>
+                            <div class="dashboard__content-info__inner-recent__item">
+                                <p class="dashboard__content-info__inner-recent__item-date">21 listopada 2022</p>
+                                <h3>Sklep</h3>
+                                <p class="dashboard__content-info__inner-recent__item-desc">Dane już wysłane na serwer</p>
+                                <h5>Kamil Marczak</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
