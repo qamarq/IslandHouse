@@ -3,6 +3,10 @@
     width: 100%;
     display: flex;
 
+    .container {
+        padding: 5rem 3.2rem 0 !important;
+    }
+
     &__sidebar {
         width: 8rem;
         height: 100%;
@@ -109,6 +113,82 @@
 
         &-main {
             width: 100%;
+
+            .screen_main-messages {
+                margin: 30px;
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                height: 252px;
+                max-height: 252px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+
+                &__item {
+                    background: linear-gradient(65deg, #2533cf 0%, #515fff 100%);
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    margin: 10px 0;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all .2s;
+                    
+                    iconify-icon {
+                        font-size: 20px;
+                        transform: translateY(-2px);
+                    }
+
+                    p {
+                        font-size: 15px;
+                        font-weight: 600;
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
+
+                    &:hover {
+                        scale: 1.02;
+                    }
+                }
+            }
+
+            .screen_main-cards {
+                margin: 30px;
+                padding: 15px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+
+                &__card {
+                    background: linear-gradient(65deg, rgba(55,71,255,1) 0%, rgba(81,95,255,1) 100%);
+                    padding: 15px;
+                    border-radius: 10px;
+                    position: relative;
+                    cursor: pointer;
+                    transition: all .2s;
+                    
+                    .type {
+                        font-size: 12px;
+                        font-weight: 400;
+                        margin-top: 10px;
+                    }
+                    .content {
+                        margin-top: 20px;
+                        width: 80%;
+                        margin-bottom: 25px;
+                    }
+                    .card_bg {
+                        position: absolute;
+                        right: 20px;
+                        top: 0;
+                        height: 100%;
+                    }
+                    &:hover {
+                        scale: 1.02;
+                    }
+                }
+            }
         }
 
         &-info {

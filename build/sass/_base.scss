@@ -66,6 +66,20 @@ body {
   margin-bottom: 1.4rem;
 }
 
+.heading-quinary {
+  font-size: 4.1rem;
+  font-weight: 700;
+  margin-bottom: 1.4rem;
+}
+
+.heading-description {
+  color: #b4b4b4;
+  font-weight: 500;
+  font-size: 1.7rem;
+  opacity: 0.8;
+  margin-bottom: 3.2rem;
+}
+
 .btn-cta {
   &:link,
   &:visited {
@@ -158,4 +172,37 @@ body {
   &.right {
     rotate: 180deg;
   }
+}
+
+.chip {
+  background-color: #ffffff23;
+  padding: 5px 15px;
+  margin: 5px;
+  border-radius: 30px;
+  border: 1px solid #1eecff79;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: 500 !important;
+  }
+
+  &.error {
+    background-color: #fc133a54;
+    border: 1px solid #fc133a79;
+  }
+  &.success {
+    background-color: #02ff6354;
+    border: 1px solid #02ff6379;
+  }
+}
+
+hr {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(238, 238, 238, 0.226);
+  margin: 40px 130px;
 }
