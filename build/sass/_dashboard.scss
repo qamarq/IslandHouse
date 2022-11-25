@@ -39,7 +39,10 @@
             cursor: pointer;
 
             &.active {
-                background-color: #1eecff1d;
+                background-color: #1eecff34;
+                &:hover {
+                    background-color: #1eecff44;
+                }
                 i {
                     color: #1eeeff;
                 }
