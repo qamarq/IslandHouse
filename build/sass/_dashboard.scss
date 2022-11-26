@@ -2,6 +2,7 @@
     height: 100vh;
     width: 100%;
     display: flex;
+    overflow-x: hidden;
 
     .container {
         padding: 5rem 3.2rem 0 !important;
@@ -192,7 +193,225 @@
                     }
                 }
             }
+
+            .screen__messages {
+                display: flex;
+                height: 100%;
+                width: 100%;
+                &-side {
+                    width: 300px;
+                    min-width: 300px;
+                    height: 100vh;
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+                    &__search {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        &-header {
+                            width: 100%;
+                            display: flex;
+                            margin: 5px 20px;
+                            padding: 0 15px;
+                            align-items: center;
+                            .title {
+                                font-size: 26px;
+                                font-weight: 700;
+                                width: 100%;
+                            }
+                        }
+                        .input {
+                            width: 93%;
+                            margin: 10px;
+                        }
+                        input {
+                            font-size: 15px !important;
+                        }
+                    }
+                    &__item {
+                        .dashboard__content-header__profile {
+                            margin: 0 !important;
+                        }
+                        position: relative;
+                        display: flex;
+                        padding: 13px;
+                        background-color: #ffffff00;
+                        transition: all .2s;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #ffffff1c;
+                        }
+                        &.active {
+                            background-color: #1eecff1c;
+                        }
+                        .dot {
+                            width: 10px;
+                            height: 10px;
+                            min-width: 10px;
+                            min-height: 10px;
+                            border-radius: 50px;
+                            background-color: #1eecff;
+                            position: absolute;
+                            right: 30px;
+                            top: 30px;
+                        }
+                        &-texts {
+                            display: flex;
+                            flex-direction: column;
+                            margin-left: 15px;
+                            margin-top: 5px;
+                            margin-bottom: 10px;
+                            align-items: flex-start;
+                            .chip {
+                                margin: 0 !important;
+                            }
+                            h1 {
+                                font-size: 15px;
+                                margin-bottom: 16px;
+                            }
+                        }
+                    }
+                }
+
+                &-empty {
+                    height: 100vh;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    img {
+                        width: 400px;
+                        opacity: 0.7;
+                        margin-top: 50px;
+                    }
+                    h1 {
+                        font-size: 30px;
+                    }
+                    h2 {
+                        font-weight: 400;
+                        margin-top: 10px;
+                        color: #eee;
+                    }
+                }
+
+                &-main {
+                    width: 100%;
+                    height: 100vh;
+                    max-height: 100vh;
+                    &__header {
+                        .dashboard__content-header__profile {margin: 0 !important;}
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 80px;
+                        padding: 15px 30px;
+                        border-bottom: 1px solid rgba(238, 238, 238, 0.212);
+                        &-texts {
+                            min-width: max-content;
+                            margin-left: 15px;
+                            p {
+                                margin-top: 5px;
+                                font-size: 14px;
+                            }
+                        }
+                        .space {width: 100%;}
+                        iconify-icon {
+                            font-size: 20px;
+                            margin-right: 10px;
+                            padding: 10px;
+                            cursor: pointer;
+                            transition: all .2s;
+                            border-radius: 10px;
+                            background-color: #ffffff00;
+                            &:hover {
+                                color: #1eecff;
+                                background-color: #ffffff15;
+                            }
+                        }
+                    }
+                    &__chat {
+                        height: calc(100vh - 160px);
+                        overflow-y: scroll;
+                        overflow-x: hidden;
+                        padding: 10px;
+                        &-item {
+                            box-sizing: border-box;
+                            margin: 10px 0;
+                            .dashboard__content-header__profile {margin: 0 10px !important;}
+                            width: 100%;
+                            &__inner {
+                                max-width: fit-content;
+                                display: flex;
+                                align-items: flex-start;
+                                cursor: default;
+                                &-texts {
+                                    display: flex;
+                                    flex-direction: column;
+                                    &__header {
+                                        display: flex;
+                                        align-items: center;
+                                        h1 {
+                                            font-size: 17px;
+                                        }
+                                        h2 {
+                                            font-size: 12px;
+                                            font-weight: 200;
+                                            color: #eee;
+                                            margin-left: 10px;
+                                        }
+                                    }
+                                    p {
+                                        background-color: rgba(255, 255, 255, 0.24);
+                                        padding: 10px;
+                                        font-size: 14px;
+                                        margin: 10px 0;
+                                        text-align: left;
+                                        max-width: 400px;
+                                        border-top-left-radius: 2px;
+                                        border-top-right-radius: 15px;
+                                        border-bottom-left-radius: 15px;
+                                        border-bottom-right-radius: 15px;
+                                    }
+                                }
+                            }
+
+                            &.right {
+                                display: flex;
+                                justify-content: end;
+                            }
+
+                            &.right .screen__messages-main__chat-item__inner {
+                                flex-direction: row-reverse;
+                                &-texts {
+                                    align-items: end;
+                                    &__header {
+                                        justify-content: flex-start;
+                                        flex-direction: row-reverse;
+                                        h2 {
+                                            margin-right: 10px;
+                                        }
+                                    }
+                                    p {
+                                        background: linear-gradient(65deg, rgba(55,71,255,1) 0%, rgba(81,95,255,1) 100%);
+                                        padding: 10px;
+                                        border-top-left-radius: 15px;
+                                        border-top-right-radius: 2px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &__send {
+                        height: 80px;
+                        box-sizing: border-box;
+                        padding: 10px;
+                    }
+                }
+            }
         }
+
 
         &-info {
             width: 40rem;

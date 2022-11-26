@@ -49,11 +49,6 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
     });
 })
 
-app.delete('/logout', (req, res) => {
-    req.logOut()
-    res.redirect('/')
-})
-
 app.post('/send-order/', function(req, res, next) {
     if (true) {
         let insertQuery = 'INSERT INTO `orders` (`owner_name`, `owner_email`, `owner_phone`, `order_type`, `order_budget`, `owner_contact`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?, ?)';
@@ -76,5 +71,67 @@ app.post('/send-order/', function(req, res, next) {
         });
     } else {
         return res.status(401).send({type: 'error', message: 'Exploit detected'});
+    }
+});
+
+app.post('/messages/:action', function(req, res, next) {
+    const { action } = req.params;
+    if (action == 'get-messages') {
+        let selectQuery = 'SELECT fromEmail, fromName, message, timestamp FROM `messages` WHERE (`fromEmail` = ? AND `toEmail` = ?) OR (`fromEmail` = ? AND `toEmail` = ?) ORDER BY timestamp';
+        let insertSelectQuery = mysql.format(selectQuery, [
+            req.body.fromEmail,
+            req.body.toEmail,
+            req.body.toEmail,
+            req.body.fromEmail,
+        ]);
+        connection.query(insertSelectQuery, (err, rows) => {
+            if (err) {
+                console.error(err)
+                return;
+            } else {
+                res.status(200).send({type: 'success', data: rows});
+            }
+        });
+    } else if (action == 'get-users') {
+        let selectQuery = 'SELECT toName, MIN(toEmail) AS toEmail FROM `messages` WHERE `fromEmail` = ? GROUP BY toName';
+        let insertSelectQuery = mysql.format(selectQuery, [
+            req.body.fromEmail
+        ]);
+        connection.query(insertSelectQuery, (err, rows) => {
+            if (err) {
+                console.error(err)
+                return;
+            } else {
+                if (rows.length == 0) {
+                    let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
+                    let insertSelectQuery = mysql.format(selectQuery, [
+                        req.body.fromEmail
+                    ]);
+                    connection.query(insertSelectQuery, (err, rows) => {
+                        if (err) {
+                            console.error(err)
+                            return;
+                        } else {
+                            return res.status(200).send({type: 'success', data: rows});
+                        }
+                    });
+                } else {
+                    let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
+                    let insertSelectQuery = mysql.format(selectQuery, [
+                        req.body.fromEmail
+                    ]);
+                    connection.query(insertSelectQuery, (err, rows2) => {
+                        if (err) {
+                            console.error(err)
+                            return;
+                        } else {
+                            const output = rows.concat(rows2);
+                            return res.status(200).send({type: 'success', data: output});
+                        }
+                    });
+                }
+               
+            }
+        });
     }
 });

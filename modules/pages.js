@@ -7,7 +7,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/dashboard', checkAuthenticated, (req, res) => {
-    res.render('dashboard.ejs')
+    res.render('dashboard.ejs', {
+        name: req.user.name,
+        email: req.user.email
+    })
 })
 
 app.get('/portfolio/:page', (req, res) => {
@@ -25,4 +28,9 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs')
+})
+
+app.delete('/logout', (req, res) => {
+    req.logOut()
+    res.redirect('/')
 })

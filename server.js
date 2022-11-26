@@ -6,6 +6,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
+const http = require('http');
 
 const app = express();
 const port = process.env.PORT || "8000";
@@ -38,11 +39,14 @@ app.use(
   })
 );
 
-app.listen(port, () => {
+const server = http.createServer(app);
+server.listen(port, () => {
   console.log(`Strona dostępna na http://localhost:${port}`);
 });
 
 exports.app = app;
+exports.server = server;
 exports.passport = passport;
 require("./modules/pages");
 require('./modules/api')
+require('./modules/messages')

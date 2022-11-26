@@ -13,7 +13,7 @@
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {width: 10px;}
+::-webkit-scrollbar {width: 7px;}
 ::-webkit-scrollbar-track {background: #000e24;}
 ::-webkit-scrollbar-thumb {background: #1eeeff;border-radius: 25px;}
 ::-webkit-scrollbar-thumb:hover {background: #00b3c4; }
@@ -143,6 +143,11 @@ body {
     margin-right: 10px;
   }
 
+  iconify-icon {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
   input {
     font-size: 20px;
     background: transparent;
@@ -205,4 +210,61 @@ hr {
   border: none;
   border-bottom: 1px solid rgba(238, 238, 238, 0.226);
   margin: 40px 130px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  background-color: #1eecff;
+  border-radius: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  iconify-icon {
+    font-size: 20px;
+    color: #2533cf;
+  }
+}
+
+.input-chat {
+  background-color: #00b4c41a;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  input {
+    font-size: 17px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    color: #cccccc;
+    &:focus {outline: none;}
+  }
+  .hr {
+    background-color: rgba(238, 238, 238, 0.171);
+    width: 2px;
+    border-radius: 10px;
+    margin: 0 3px;
+    height: 23px;
+  }
+  iconify-icon {
+    font-size: 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all .2s;
+    &:hover {
+      color: #7581ff;
+    }
+    &.send_icon {
+      color: #1eecff;
+      &:hover {
+        color: #05b4c4;
+      }
+    }
+  }
 }
