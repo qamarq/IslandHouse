@@ -1,13 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>IslandHouse | Portfolio</title>
+        <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+        <link rel="icon" href="../img/favicon.png" />
+        <link rel="stylesheet" href="../css/main.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <%= title %>
-        <%= desc %>
+        <div class="portfolio-page">
+            <div class="portfolio-page__header" style='background-image: url("../img/<%= image %>");'>
+                <!-- <img src="../img/portfolio-1.png" alt="" srcset=""> -->
+                <h1 class="heading-tertiary"><%= title %></h1>
+                <h2 class="heading-secondary"><%= subtitle %></h2>
+
+                <div class="back-btn">
+                    <iconify-icon icon="uil:angle-left"></iconify-icon>
+                    <p>Powrót</p>
+                </div>
+            </div>
+            <div class="portfolio-page__content">
+                <div class="portfolio-page__content-head">
+                    <img src="../img/<%= image %>" alt="" srcset="">
+                    <div class="portfolio-page__content-head__texts">
+                        <h1 class="title"><%= title %></h1>
+                        <h2 class="subtitle"><%= subtitle %></h2>
+                        <p class="content"><%= content %></p>
+                        <a href="<%= link %>" class="btn-cta" id="show_contact_btn">Odwiedź stronę</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            $('.back-btn').click(function() {
+                window.location.href = "/"
+            })
+        </script>
     </body>
 </html>

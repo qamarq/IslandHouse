@@ -18,7 +18,10 @@ app.get('/portfolio/:page', (req, res) => {
     const portfolioItem = pagePortfolioContent.get(page)
     res.render('portfolio.ejs', {
         title: portfolioItem !== undefined ? portfolioItem.title : "Undefined title",
-        desc: portfolioItem !== undefined ? portfolioItem.desc : "Undefined desc"
+        subtitle: portfolioItem !== undefined ? portfolioItem.subtitle : "Undefined subtitle",
+        content: portfolioItem !== undefined ? portfolioItem.content : "Undefined content",
+        image: portfolioItem !== undefined ? portfolioItem.image : "Undefined image",
+        link: portfolioItem !== undefined ? portfolioItem.link : "Undefined link",
     })
 })
 

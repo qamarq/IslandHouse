@@ -22,6 +22,10 @@ allLinks.forEach(function (link) {
     });
 });
 
+$('.portfolio__item').click(function (e) {
+    window.location.href = "/portfolio/" + $(this).attr("redirect");
+})
+
 const items = ['one', 'two', 'three', 'four'];
 const cards = ['name-review', 'needs', 'price', 'contacts'];
 let rememberActive = 1;
