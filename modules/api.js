@@ -74,6 +74,18 @@ app.post('/send-order/', function(req, res, next) {
     }
 });
 
+app.post('/get-order/', function(req, res, next) {
+    let selectQuery = 'SELECT * FROM `orders` LIMIT 50';
+    connection.query(selectQuery, (err, rows) => {
+        if (err) {
+            console.error(err)
+            return;
+        } else {
+            res.status(200).send({type: 'success', data: rows});
+        }
+    });
+});
+
 app.post('/messages/:action', function(req, res, next) {
     const { action } = req.params;
     if (action == 'get-messages') {

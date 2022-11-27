@@ -90,6 +90,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="screen__orders" style="display: none;">
+                        <div class="container">
+                            <h1 class="heading-secondary">Podania</h1>
+                            <div class="orders">
+                                <table id="table_orders">
+                                    <tr>
+                                        <th>Nazwa</th>
+                                        <th>E-Mail</th>
+                                        <th>Typ zamówienia</th>
+                                        <th></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <div class="screen__messages" style="display: none;">
                         <div class="screen__messages-side">
                             <div class="screen__messages-side__search">
@@ -178,6 +193,35 @@
             let addedUsers = {}
             var prev_msg = ""
 
+            $.ajax({
+                type: "POST",
+                url: '/get-order',
+                dataType: "json",
+                success: function(data) {
+                    const obj = data.data
+                    obj.forEach(item => {
+                        console.log(item)
+                        let firstLetter = item.owner_name.charAt(0).toUpperCase();
+                        var icon = ""
+                        if (item.order_type == "Aplikacja") {
+                            icon = "android"
+                        } else if (item.order_type == "Strona internetowa") {
+                            icon = "bag-alt"
+                        } else {
+                            icon = "dollar-alt"
+                        }
+                        var elem = `
+                        <tr>
+                            <td class="table_name"><div class="dashboard__content-header__profile"><p>${firstLetter}</p></div><p>${item.owner_name}</p></td>
+                            <td>${item.owner_email}</td>
+                            <td class="table_type"><p>${item.order_type}</p><iconify-icon icon="uil:${icon}"></iconify-icon></td>
+                            <td><div class="icon-btn"><iconify-icon icon="uil:folder-open"></iconify-icon></div></td>
+                        </tr>`;
+                        $(elem).appendTo($('#table_orders'));
+                    })
+                }
+            });
+
             $('.dashboard__sidebar-item').click(function() {
                 $('.dashboard__sidebar-item').removeClass('active');
                 $(this).addClass('active');   
@@ -185,11 +229,21 @@
                 var menuId = $(this).attr('id');
                 if (menuId == 'home') {
                     $('.screen__messages').fadeOut('fast', function(){
-                        $('.screen__main').fadeIn('fast');   
+                        $('.screen__orders').fadeOut('fast', function(){
+                            $('.screen__main').fadeIn('fast');   
+                        });
                     });
                 } else if (menuId == 'messages_side') {
                     $('.screen__main').fadeOut('fast', function(){
-                        $('.screen__messages').fadeIn('fast');   
+                        $('.screen__orders').fadeOut('fast', function(){
+                            $('.screen__messages').fadeIn('fast');   
+                        });
+                    });
+                } else if (menuId == 'orders') {
+                    $('.screen__main').fadeOut('fast', function(){
+                        $('.screen__messages').fadeOut('fast', function(){
+                            $('.screen__orders').fadeIn('fast');   
+                        });
                     });
                 }
             })
