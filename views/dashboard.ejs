@@ -140,7 +140,7 @@
                     <div class="dashboard__content-info__inner">
                         <div class="dashboard__content-header__profile"><p>K</p></div>
                         <h1 class="dashboard__content-info__inner-title"><%= name %></h1>
-                        <h2><%= email %></h2>
+                        <h2 class="dashboard__content-info__inner-subtitle"><%= email %></h2>
                         <div class="dashboard__content-info__inner-items">
                             <div class="dashboard__content-info__inner-item">
                                 <iconify-icon icon="uil:envelope-minus"></iconify-icon>
@@ -176,6 +176,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             let addedUsers = {}
+            var prev_msg = ""
 
             $('.dashboard__sidebar-item').click(function() {
                 $('.dashboard__sidebar-item').removeClass('active');
@@ -222,7 +223,6 @@
             });
             var typingTimeout = null
             socket.on('typing', function(email) {
-                var prev_msg = ""
                 if ($('.send_icon').attr('toemail') == email) {
                     $('#messagebox_email').text("Pisze...");
                     $('#messagebox_email').css("color", "#1eecff");
@@ -278,11 +278,14 @@
                     objDiv.scrollTop = objDiv.scrollHeight;
                     const words = (ownMessage == true ? item.toEmail : item.fromEmail).split('@');
                     $('#mess_'+words[0]).text(message)
+                    prev_msg = message
                 } else {
                     if (addedUsers[item.fromEmail] == true) {
                         const words = item.fromEmail.split('@');
                         $('#dot_'+words[0]).fadeIn('fast');
+                        $('#mess_'+words[0]).addClass("bold");
                         $('#mess_'+words[0]).text(message)
+                        prev_msg = message
                     } else {
                         getUsers();
                     }
@@ -308,11 +311,11 @@
                                 const words = email.split('@');
                                 let firstLetter = name.charAt(0).toUpperCase()
                                 var elm = `<div class="screen__messages-side__item" data-toemail="${email}" data-toname="${name}">
-                                            <div class="dot" id="dot_${words[0]}" ${item.readed == 0 ? '' : 'style="display: none;"'}></div>
+                                            <div class="dot" id="dot_${words[0]}" ${(item.readed == 0 && item.toEmail == "<%= email %>") ? '' : 'style="display: none;"'}></div>
                                             <div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>
                                             <div class="screen__messages-side__item-texts">
                                                 <h1 class="title">${name}</h1>
-                                                <h2 class="mess" id="mess_${words[0]}">${item.message}</h2>
+                                                <h2 class="mess ${(item.readed == 0 && item.toEmail == "<%= email %>") ? 'bold' : ''}" id="mess_${words[0]}">${item.message}</h2>
                                                 <div class="chip"><p>${email}</p></div>
                                             </div>
                                         </div>`;
@@ -339,6 +342,7 @@
                 $('#messagebox_logo').text(firstLetter);
                 $('#messagebox_name').text(name);
                 $('#messagebox_email').text(email);
+                $('#mess_'+words[0]).removeClass("bold");
 
                 $.post("/messages/get-messages", {
                     fromEmail: '<%= email %>',
@@ -382,6 +386,7 @@
                                     behavior: "smooth",
                                 });
                                 socket.emit('read_message', email);
+                                $('#message').focus();
                             });
                         })
                     }
