@@ -93,44 +93,102 @@ app.post('/messages/:action', function(req, res, next) {
             }
         });
     } else if (action == 'get-users') {
-        let selectQuery = 'SELECT toName, MIN(toEmail) AS toEmail FROM `messages` WHERE `fromEmail` = ? GROUP BY toName';
+        // let selectQuery = 'SELECT toName, MIN(toEmail) AS toEmail, readed FROM `messages` WHERE `fromEmail` = ? GROUP BY toName';
+        // let insertSelectQuery = mysql.format(selectQuery, [
+        //     req.body.fromEmail
+        // ]);
+        // connection.query(insertSelectQuery, (err, rows) => {
+        //     if (err) {
+        //         console.error(err)
+        //         return;
+        //     } else {
+        //         if (rows.length == 0) {
+        //             let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail, readed FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
+        //             let insertSelectQuery = mysql.format(selectQuery, [
+        //                 req.body.fromEmail
+        //             ]);
+        //             connection.query(insertSelectQuery, (err, rows) => {
+        //                 if (err) {
+        //                     console.error(err)
+        //                     return;
+        //                 } else {
+        //                     return res.status(200).send({type: 'success', data: rows});
+        //                 }
+        //             });
+        //         } else {
+        //             let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail, readed FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
+        //             let insertSelectQuery = mysql.format(selectQuery, [
+        //                 req.body.fromEmail
+        //             ]);
+        //             connection.query(insertSelectQuery, (err, rows2) => {
+        //                 if (err) {
+        //                     console.error(err)
+        //                     return;
+        //                 } else {
+        //                     const output = rows.concat(rows2);
+        //                     return res.status(200).send({type: 'success', data: output});
+        //                 }
+        //             });
+        //         }
+               
+        //     }
+        // });
+
+
+
+        // let selectQuery = 'SELECT fromName, fromEmail, readed, message FROM `messages` WHERE `toEmail` = ? ORDER BY timestamp DESC';
+        // let insertSelectQuery = mysql.format(selectQuery, [
+        //     req.body.fromEmail
+        // ]);
+        // connection.query(insertSelectQuery, (err, rows) => {
+        //     if (err) {
+        //         console.error(err)
+        //         return;
+        //     } else {
+        //         // if (rows.length == 0) {
+        //         //     let selectQuery = 'SELECT toName, toEmail, readed, message FROM `messages` WHERE `fromEmail` = ? ORDER BY timestamp DESC';
+        //         //     let insertSelectQuery = mysql.format(selectQuery, [
+        //         //         req.body.fromEmail
+        //         //     ]);
+        //         //     connection.query(insertSelectQuery, (err, rows2) => {
+        //         //         if (err) {
+        //         //             console.error(err)
+        //         //             return;
+        //         //         } else {
+        //         //             return res.status(200).send({type: 'success', data: rows});
+        //         //         }
+        //         //     });
+        //         // } else {
+                    
+        //         // }
+        //         let selectQuery = 'SELECT toName, toEmail, readed, message FROM `messages` WHERE `fromEmail` = ? ORDER BY timestamp DESC';
+        //         let insertSelectQuery = mysql.format(selectQuery, [
+        //             req.body.fromEmail
+        //         ]);
+        //         connection.query(insertSelectQuery, (err, rows2) => {
+        //             if (err) {
+        //                 console.error(err)
+        //                 return;
+        //             } else {
+        //                 const output = rows.concat(rows2);
+        //                 return res.status(200).send({type: 'success', data: output});
+        //             }
+        //         });
+        //         // return res.status(200).send({type: 'success', data: rows});
+        //     }
+        // });
+
+        let selectQuery = 'SELECT fromName, fromEmail, toName, toEmail, readed, message FROM `messages` WHERE `fromEmail` = ?  OR `toEmail` = ? ORDER BY timestamp DESC';
         let insertSelectQuery = mysql.format(selectQuery, [
-            req.body.fromEmail
+            req.user.email,
+            req.user.email
         ]);
         connection.query(insertSelectQuery, (err, rows) => {
             if (err) {
                 console.error(err)
                 return;
             } else {
-                if (rows.length == 0) {
-                    let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
-                    let insertSelectQuery = mysql.format(selectQuery, [
-                        req.body.fromEmail
-                    ]);
-                    connection.query(insertSelectQuery, (err, rows) => {
-                        if (err) {
-                            console.error(err)
-                            return;
-                        } else {
-                            return res.status(200).send({type: 'success', data: rows});
-                        }
-                    });
-                } else {
-                    let selectQuery = 'SELECT fromName, MIN(fromEmail) AS fromEmail FROM `messages` WHERE `toEmail` = ? GROUP BY fromName';
-                    let insertSelectQuery = mysql.format(selectQuery, [
-                        req.body.fromEmail
-                    ]);
-                    connection.query(insertSelectQuery, (err, rows2) => {
-                        if (err) {
-                            console.error(err)
-                            return;
-                        } else {
-                            const output = rows.concat(rows2);
-                            return res.status(200).send({type: 'success', data: output});
-                        }
-                    });
-                }
-               
+                return res.status(200).send({type: 'success', data: rows});
             }
         });
     }

@@ -139,7 +139,8 @@
                 <div class="dashboard__content-info">
                     <div class="dashboard__content-info__inner">
                         <div class="dashboard__content-header__profile"><p>K</p></div>
-                        <h1 class="dashboard__content-info__inner-title">Kamil Marczak</h1>
+                        <h1 class="dashboard__content-info__inner-title"><%= name %></h1>
+                        <h2><%= email %></h2>
                         <div class="dashboard__content-info__inner-items">
                             <div class="dashboard__content-info__inner-item">
                                 <iconify-icon icon="uil:envelope-minus"></iconify-icon>
@@ -221,9 +222,11 @@
             });
             var typingTimeout = null
             socket.on('typing', function(email) {
+                var prev_msg = ""
                 if ($('.send_icon').attr('toemail') == email) {
                     $('#messagebox_email').text("Pisze...");
                     $('#messagebox_email').css("color", "#1eecff");
+
                     if (typingTimeout == null) {
                         typingTimeout = window.setTimeout(function() {
                             $('#messagebox_email').text($('.send_icon').attr('toemail'));
@@ -231,6 +234,18 @@
                             typingTimeout = null;
                         }, 3000);
                     }
+                } else {
+                    const words = email.split('@');
+                    if ($('#mess_'+words[0]).text() != "Pisze...") {prev_msg = $('#mess_'+words[0]).text()}
+                    $('#mess_'+words[0]).text("Pisze...")
+                    $('#mess_'+words[0]).css("color", "#1eecff");
+                    if (typingTimeout == null) {
+                        typingTimeout = window.setTimeout(function() {
+                            $('#mess_'+words[0]).text(prev_msg)
+                            $('#mess_'+words[0]).css("color", "#eee");
+                            typingTimeout = null;
+                        }, 3000);
+                    } 
                 }
             });
             socket.on('chat_message', function(item) {
@@ -261,10 +276,13 @@
                     $(elem).appendTo($('#messages'));
                     var objDiv = document.getElementById("messages");
                     objDiv.scrollTop = objDiv.scrollHeight;
+                    const words = (ownMessage == true ? item.toEmail : item.fromEmail).split('@');
+                    $('#mess_'+words[0]).text(message)
                 } else {
                     if (addedUsers[item.fromEmail] == true) {
                         const words = item.fromEmail.split('@');
                         $('#dot_'+words[0]).fadeIn('fast');
+                        $('#mess_'+words[0]).text(message)
                     } else {
                         getUsers();
                     }
@@ -280,25 +298,25 @@
                         const obj = response.data
                         $('.screen__messages-side__items').empty();
                         obj.forEach(item => {
-                            let email = item.toEmail
-                            let name = item.toName
-                            if (email === undefined) {
-                                email = item.fromEmail
-                                name = item.fromName
+                            let email = item.fromEmail
+                            let name = item.fromName
+                            if (email === '<%= email %>') {
+                                email = item.toEmail
+                                name = item.toName
                             }
-                            if (addedUsers[email] == null) {
+                            if (addedUsers[email] == null && email != '<%= email %>') {
                                 const words = email.split('@');
                                 let firstLetter = name.charAt(0).toUpperCase()
                                 var elm = `<div class="screen__messages-side__item" data-toemail="${email}" data-toname="${name}">
-                                            <div class="dot" id="dot_${words[0]}" style="display: none;"></div>
+                                            <div class="dot" id="dot_${words[0]}" ${item.readed == 0 ? '' : 'style="display: none;"'}></div>
                                             <div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>
                                             <div class="screen__messages-side__item-texts">
                                                 <h1 class="title">${name}</h1>
-                                            
+                                                <h2 class="mess" id="mess_${words[0]}">${item.message}</h2>
                                                 <div class="chip"><p>${email}</p></div>
                                             </div>
                                         </div>`;
-                                $(elm).prependTo($('.screen__messages-side__items'));
+                                $(elm).appendTo($('.screen__messages-side__items'));
                                 addedUsers[email] = true;
                             }
                         });
@@ -363,6 +381,7 @@
                                     top: objDiv.scrollHeight,
                                     behavior: "smooth",
                                 });
+                                socket.emit('read_message', email);
                             });
                         })
                     }

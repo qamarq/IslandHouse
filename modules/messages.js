@@ -17,22 +17,26 @@ io.on('connection', (socket) => {
         socket.email = data.email;
         users[socket.email] = socket;
     });
+    socket.on('read_message', (email) => {
+        connection.query(`UPDATE messages SET readed = 1 WHERE fromEmail = '${email}' AND toEmail = '${socket.email}'`); 
+        connection.query(`UPDATE messages SET readed = 1 WHERE toEmail = '${email}' AND fromEmail = '${socket.email}'`);  
+    });
     socket.on('disconnect', () => {
         users[socket.email] = null;
     });
     socket.on('typing', (toEmail) => {
         if (users[toEmail] !== undefined) {
             try {
-                socket.to(users[toEmail].id).emit("typing", users[toEmail].email);
+                socket.to(users[toEmail].id).emit("typing", socket.email);
             } catch(e) {
-
+                
             }
         }
     });
     socket.on('chat_message', (msg) => {
         try {
             const targetUser = users[msg.toEmail];
-            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`) VALUES (?, ?, ?, ?, ?, ?)';
+            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
             let query = mysql.format(insertQuery, [
                 targetUser.email,
                 targetUser.name,
@@ -40,6 +44,7 @@ io.on('connection', (socket) => {
                 socket.name,
                 new Date().getTime(),
                 msg.msg,
+                1
             ]);
             connection.query(query, (err, response) => {
                 // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
@@ -51,7 +56,7 @@ io.on('connection', (socket) => {
                 socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: msg.msg});
             });
         } catch(e) {
-            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`) VALUES (?, ?, ?, ?, ?, ?)';
+            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
             let query = mysql.format(insertQuery, [
                 msg.toEmail,
                 msg.toName,
@@ -59,6 +64,7 @@ io.on('connection', (socket) => {
                 socket.name,
                 new Date().getTime(),
                 msg.msg,
+                0
             ]);
             connection.query(query, (err, response) => {
                 // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
