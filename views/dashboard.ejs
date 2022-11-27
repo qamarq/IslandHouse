@@ -22,7 +22,7 @@
                 <div class="dashboard__sidebar-item" id="messages_side"><iconify-icon icon="uil:envelope-minus"></iconify-icon></div>
                 <div class="space-h"></div>
                 <div class="dashboard__sidebar-item" id="settings"><iconify-icon icon="uil:setting"></iconify-icon></div>
-                <form action="/logout?_method=DELETE" method="POST">
+                <form action="/logout" method="GET">
                     <button class="dashboard__sidebar-item" type="submit" id="logout"><iconify-icon icon="uil:exit"></iconify-icon></button>
                 </form>
             </div>
@@ -193,7 +193,7 @@
             })
 
             $('.icon-btn').click(function() {
-                socket.emit('chat message', { toEmail: $('#search_name').val(), msg: 'Witam' });
+                socket.emit('chat_message', { toEmail: $('#search_name').val(), toName: "", msg: 'Witam' });
                 $('#search_name').val("");
                 setTimeout(getUsers(), 1000);
             });
@@ -204,11 +204,11 @@
             socket.emit('change_username', { username: '<%= name %>', email: '<%= email %>'});
             var messages = document.getElementById('messages');
             $('.send_icon').click(function(e) {
-                socket.emit('chat message', { toEmail: $('.send_icon').attr('toemail'), msg: $('#message').val() });
+                socket.emit('chat_message', { toEmail: $('.send_icon').attr('toemail'), toName: $('.screen__messages-side__item.active').data("toname"), msg: $('#message').val() });
                 $('#message').val("");
             });
             $('#message').bind("enterKey",function(e){
-                socket.emit('chat message', { toEmail: $('.send_icon').attr('toemail'), msg: $('#message').val() });
+                socket.emit('chat_message', { toEmail: $('.send_icon').attr('toemail'), toName: $('.screen__messages-side__item.active').data("toname"), msg: $('#message').val() });
                 $('#message').val("");
             });
             $('#message').keyup(function(e){
@@ -233,7 +233,7 @@
                     }
                 }
             });
-            socket.on('chat message', function(item) {
+            socket.on('chat_message', function(item) {
                 var ownMessage = false
                 if (item.fromEmail == '<%= email %>') {ownMessage = true}
                 var message = item.message
