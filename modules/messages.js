@@ -24,6 +24,60 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         users[socket.email] = null;
     });
+    socket.on('add_user', (userEmail) => {
+        let selectQuery = 'SELECT name FROM `users` WHERE email = ? LIMIT 1';
+        let insertSelectQuery = mysql.format(selectQuery, [
+            userEmail
+        ]);
+        connection.query(insertSelectQuery, (err, rows) => {
+            if (err) {
+                console.error(err)
+                return;
+            } else {
+                try {
+                    const targetUser = users[userEmail];
+                    let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+                    let query = mysql.format(insertQuery, [
+                        targetUser.email,
+                        targetUser.name,
+                        socket.email,
+                        socket.name,
+                        new Date().getTime(),
+                        msg.msg,
+                        1
+                    ]);
+                    connection.query(query, (err, response) => {
+                        // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
+                        if (err) {
+                            console.log(err)
+                            return;
+                        }
+                        socket.to(users[userEmail].id).emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: msg.msg});
+                        socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: msg.msg});
+                    });
+                } catch(e) {
+                    let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+                    let query = mysql.format(insertQuery, [
+                        userEmail,
+                        rows[0].name,
+                        socket.email,
+                        socket.name,
+                        new Date().getTime(),
+                        "Witam",
+                        0
+                    ]);
+                    connection.query(query, (err, response) => {
+                        // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
+                        if (err) {
+                            console.log(err)
+                            return;
+                        }
+                        socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: userEmail, toName: rows[0].name, message: "Witam"});
+                    });
+                }
+            }
+        });
+    });
     socket.on('typing', (toEmail) => {
         if (users[toEmail] !== undefined) {
             try {

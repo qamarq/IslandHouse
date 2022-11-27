@@ -200,13 +200,12 @@
                 success: function(data) {
                     const obj = data.data
                     obj.forEach(item => {
-                        console.log(item)
                         let firstLetter = item.owner_name.charAt(0).toUpperCase();
                         var icon = ""
                         if (item.order_type == "Aplikacja") {
                             icon = "android"
                         } else if (item.order_type == "Strona internetowa") {
-                            icon = "bag-alt"
+                            icon = "bowser"
                         } else {
                             icon = "dollar-alt"
                         }
@@ -249,7 +248,7 @@
             })
 
             $('.icon-btn').click(function() {
-                socket.emit('chat_message', { toEmail: $('#search_name').val(), toName: "", msg: 'Witam' });
+                socket.emit('add_user', $('#search_name').val());
                 $('#search_name').val("");
                 setTimeout(getUsers(), 1000);
             });

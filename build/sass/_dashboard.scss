@@ -152,7 +152,7 @@
                     }
 
                     &:hover {
-                        scale: 1.02;
+                        scale: 1.01;
                     }
                 }
             }
@@ -213,6 +213,8 @@
                             min-height: 35px;
                             width: 35px;
                             height: 35px;
+                            background: linear-gradient(65deg, #2533cf 0%, #515fff 100%);
+                            color: #eee;
                             margin-right: 10px !important;
                             p {
                                 font-size: 15px;
@@ -248,8 +250,8 @@
                 }
 
                 th {
-                    background-color: #1eecff;
-                    color: #040a4d;
+                    background-color: #515fff;
+                    color: #e0e2ff;
                     font-weight: 700;
                     font-size: 15px;
                     text-align: left;
