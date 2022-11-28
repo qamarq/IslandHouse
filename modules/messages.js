@@ -90,15 +90,24 @@ io.on('connection', (socket) => {
     socket.on('chat_message', (msg) => {
         try {
             const targetUser = users[msg.toEmail];
-            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            var type = "text";
+            var message = "";
+            if (msg.msg !== undefined) {
+                message = msg.msg;
+            } else if (msg.image !== undefined) {
+                type = "image";
+                message = msg.image;
+            }
+            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
             let query = mysql.format(insertQuery, [
                 targetUser.email,
                 targetUser.name,
                 socket.email,
                 socket.name,
                 new Date().getTime(),
-                msg.msg,
-                1
+                message,
+                1,
+                type
             ]);
             connection.query(query, (err, response) => {
                 // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
@@ -106,19 +115,28 @@ io.on('connection', (socket) => {
                     console.log(err)
                     return;
                 }
-                socket.to(users[msg.toEmail].id).emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: msg.msg});
-                socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: msg.msg});
+                socket.to(users[msg.toEmail].id).emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: message, type: type});
+                socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: targetUser.email, toName: targetUser.name, message: message, type: type});
             });
         } catch(e) {
-            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            var type = "text";
+            var message = "";
+            if (msg.msg !== undefined) {
+                message = msg.msg;
+            } else if (msg.image !== undefined) {
+                type = "image";
+                message = msg.image;
+            }
+            let insertQuery = 'INSERT INTO `messages` (`toEmail`, `toName`, `fromEmail`, `fromName`, `timestamp`, `message`, `readed`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
             let query = mysql.format(insertQuery, [
                 msg.toEmail,
                 msg.toName,
                 socket.email,
                 socket.name,
                 new Date().getTime(),
-                msg.msg,
-                0
+                message,
+                0,
+                type
             ]);
             connection.query(query, (err, response) => {
                 // connection.query(`UPDATE users SET in_progress = 1, attempted = attempted + 1 WHERE email = '${req.user.email}'`);
@@ -126,7 +144,7 @@ io.on('connection', (socket) => {
                     console.log(err)
                     return;
                 }
-                socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: msg.toEmail, toName: msg.toName, message: msg.msg});
+                socket.emit('chat_message', {fromEmail: socket.email, fromName: socket.name, toEmail: msg.toEmail, toName: msg.toName, message: message, type: type});
             });
         }
     });

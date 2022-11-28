@@ -89,7 +89,7 @@ app.post('/get-order/', function(req, res, next) {
 app.post('/messages/:action', function(req, res, next) {
     const { action } = req.params;
     if (action == 'get-messages') {
-        let selectQuery = 'SELECT fromEmail, fromName, message, timestamp FROM `messages` WHERE (`fromEmail` = ? AND `toEmail` = ?) OR (`fromEmail` = ? AND `toEmail` = ?) ORDER BY timestamp';
+        let selectQuery = 'SELECT type, fromEmail, fromName, message, timestamp FROM `messages` WHERE (`fromEmail` = ? AND `toEmail` = ?) OR (`fromEmail` = ? AND `toEmail` = ?) ORDER BY timestamp';
         let insertSelectQuery = mysql.format(selectQuery, [
             req.body.fromEmail,
             req.body.toEmail,
@@ -190,7 +190,7 @@ app.post('/messages/:action', function(req, res, next) {
         //     }
         // });
 
-        let selectQuery = 'SELECT fromName, fromEmail, toName, toEmail, readed, message FROM `messages` WHERE `fromEmail` = ?  OR `toEmail` = ? ORDER BY timestamp DESC';
+        let selectQuery = 'SELECT type, fromName, fromEmail, toName, toEmail, readed, message FROM `messages` WHERE `fromEmail` = ?  OR `toEmail` = ? ORDER BY timestamp DESC';
         let insertSelectQuery = mysql.format(selectQuery, [
             req.user.email,
             req.user.email

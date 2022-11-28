@@ -474,6 +474,12 @@
                                         border-bottom-right-radius: 15px;
                                     }
                                 }
+
+                                img {
+                                    max-width: 400px;
+                                    border-radius: 20px;
+                                    cursor: pointer;
+                                }
                             }
 
                             &__inner2 {
@@ -485,6 +491,12 @@
                                     text-align: left;
                                     max-width: 400px;
                                     border-radius: 20px;
+
+                                    &.only-emoji {
+                                        background: rgba(255, 255, 255, 0) !important;
+                                        font-size: 38px;
+                                        cursor: default;
+                                    }
                                 }
                             }
 

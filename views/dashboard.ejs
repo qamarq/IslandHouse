@@ -143,6 +143,8 @@
                                 <div class="input-chat">
                                     <input placeholder="Twoja wiadomość..." autocomplete="off" type="text" name="message" id="message">
                                     <iconify-icon icon="uil:microphone"></iconify-icon>
+                                    <iconify-icon id="upload_image" icon="uil:image-upload"></iconify-icon>
+                                    <input type='file' id="imgInp" accept="image/*" style="display:none;"/>
                                     <iconify-icon icon="uil:link-alt"></iconify-icon>
                                     <div class="hr"></div>
                                     <iconify-icon class="send_icon" icon="uil:navigator"></iconify-icon>
@@ -192,6 +194,12 @@
         <script>
             let addedUsers = {}
             var prev_msg = ""
+
+            function containsOnlyEmojis(text) {
+                const onlyEmojis = text.replace(new RegExp('[\u0000-\u1eeff]', 'g'), '');
+                const visibleChars = text.replace(new RegExp('[\n\r\s]+|( )+', 'g'), '');
+                return onlyEmojis.length === visibleChars.length;
+            }
 
             $.ajax({
                 type: "POST",
@@ -274,6 +282,28 @@
             $('#message').on('input',function(e){
                 socket.emit('typing', $('.send_icon').attr('toemail'));
             });
+
+            $("#upload_image").on('click', function() {$("#imgInp").trigger('click')})
+            document.getElementById('imgInp').onchange = function (evt) {
+                var tgt = evt.target || window.event.srcElement,
+                    files = tgt.files;
+                if (FileReader && files && files.length) {
+                    var fr = new FileReader();
+                    fr.onload = function () {
+                        // var elem = `
+                        // <div class="screen__messages-main__chat-item right">
+                        //     <div class="screen__messages-main__chat-item__inner">
+                        //         <img src="${fr.result}"/>
+                        //     </div>
+                        // </div>`;
+                        // $(elem).appendTo($('#messages'));
+                        socket.emit('chat_message', { toEmail: $('.send_icon').attr('toemail'), toName: $('.screen__messages-side__item.active').data("toname"), image: fr.result });
+                    }
+                    fr.readAsDataURL(files[0]);
+                }
+                // Not supported
+                else {}
+            }
             var typingTimeout = null
             socket.on('typing', function(email) {
                 if ($('.send_icon').attr('toemail') == email) {
@@ -313,25 +343,50 @@
                     var minutes = "0" + date.getMinutes();
                     var formattedTime = hours.substr(-2) + ':' + minutes.substr(-2);
 
-                    var elem = `
-                        <div class="screen__messages-main__chat-item ${ownMessage ? "right" : "left"}">
-                            <div class="screen__messages-main__chat-item__inner">
-                                <div class="dashboard__content-header__profile"><p id="messagebox_logo">${firstLetter}</p></div>
-                                <div class="screen__messages-main__chat-item__inner-texts">
-                                    <div class="screen__messages-main__chat-item__inner-texts__header">
-                                        <h1>${ownMessage ? "Ty" : item.fromName}</h1>
-                                        <h2>${formattedTime}</h2>
-                                    </div>
-                                    <p>${message}</p>
-                                </div>
+                    let bigType = false
+                    if (item.type == "text" && containsOnlyEmojis(message)) {
+                        bigType = true
+                    }
+
+                    // var elem = `
+                    //     <div class="screen__messages-main__chat-item ${ownMessage ? "right" : "left"}">
+                    //         <div class="screen__messages-main__chat-item__inner">
+                    //             <div class="dashboard__content-header__profile"><p id="messagebox_logo">${firstLetter}</p></div>
+                    //             <div class="screen__messages-main__chat-item__inner-texts">
+                    //                 <div class="screen__messages-main__chat-item__inner-texts__header">
+                    //                     <h1>${ownMessage ? "Ty" : item.fromName}</h1>
+                    //                     <h2>${formattedTime}</h2>
+                    //                 </div>
+                    //                 <p>${message}</p>
+                    //             </div>
+                    //         </div>
+                    //     </div>`;
+                    var elem = "";
+                    if (item.type == "text") {
+                        elem = `<div class="screen__messages-main__chat-item item2 ${ownMessage ? "right" : "left"}">
+                            ${ownMessage ? "" : `<div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>`}
+                            <div class="screen__messages-main__chat-item__inner2">
+                                <p class="${bigType ? "only-emoji" : ""}">${message}</p>
                             </div>
                         </div>`;
+                    } else if (item.type == "image") {
+                        elem = `<div class="screen__messages-main__chat-item right">
+                            <div class="screen__messages-main__chat-item__inner">
+                                <img src="${message}"/>
+                            </div>
+                        </div>`;
+                    }
                     $(elem).appendTo($('#messages'));
                     var objDiv = document.getElementById("messages");
                     objDiv.scrollTop = objDiv.scrollHeight;
                     const words = (ownMessage == true ? item.toEmail : item.fromEmail).split('@');
-                    $('#mess_'+words[0]).text(message)
-                    prev_msg = message
+                    if (item.type == "image") {
+                        $('#mess_'+words[0]).text("Przesyła zdjęcie")
+                        prev_msg = "Przesyła zdjęcie"
+                    } else {
+                        $('#mess_'+words[0]).text(message)
+                        prev_msg = message
+                    }
                 } else {
                     if (addedUsers[item.fromEmail] == true) {
                         const words = item.fromEmail.split('@');
@@ -363,12 +418,18 @@
                             if (addedUsers[email] == null && email != '<%= email %>') {
                                 const words = email.split('@');
                                 let firstLetter = name.charAt(0).toUpperCase()
+                                var message = item.message
+                                if (item.type == "image") {
+                                    message = "Przesyła zdjęcie"
+                                } else {
+                                    
+                                }
                                 var elm = `<div class="screen__messages-side__item" data-toemail="${email}" data-toname="${name}">
                                             <div class="dot" id="dot_${words[0]}" ${(item.readed == 0 && item.toEmail == "<%= email %>") ? '' : 'style="display: none;"'}></div>
                                             <div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>
                                             <div class="screen__messages-side__item-texts">
                                                 <h1 class="title">${name}</h1>
-                                                <h2 class="mess ${(item.readed == 0 && item.toEmail == "<%= email %>") ? 'bold' : ''}" id="mess_${words[0]}">${item.message}</h2>
+                                                <h2 class="mess ${(item.readed == 0 && item.toEmail == "<%= email %>") ? 'bold' : ''}" id="mess_${words[0]}">${message}</h2>
                                                 <div class="chip"><p>${email}</p></div>
                                             </div>
                                         </div>`;
@@ -380,7 +441,6 @@
                 });
             }
             getUsers()
-            
 
             $(document).on('click', '.screen__messages-side__item', function(){
                 $('.screen__messages-side__item').removeClass('active');
@@ -411,6 +471,11 @@
 
                             let firstLetter = item.fromName.charAt(0).toUpperCase();
 
+                            let bigType = false
+                            if (item.type == "text" && containsOnlyEmojis(message)) {
+                                bigType = true
+                            }
+
                             var date = new Date(+item.timestamp);
                             var hours = "0" + date.getHours();
                             var minutes = "0" + date.getMinutes();
@@ -429,13 +494,21 @@
                             //             </div>
                             //         </div>
                             //     </div>`;
-                            var elem = `
-                                <div class="screen__messages-main__chat-item item2 ${ownMessage ? "right" : "left"}">
+                            var elem = "";
+                            if (item.type == "text") {
+                                elem = `<div class="screen__messages-main__chat-item item2 ${ownMessage ? "right" : "left"}">
                                     ${ownMessage ? "" : `<div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>`}
                                     <div class="screen__messages-main__chat-item__inner2">
-                                        <p>${message}</p>
+                                        <p class="${bigType ? "only-emoji" : ""}">${message}</p>
                                     </div>
                                 </div>`;
+                            } else if (item.type == "image") {
+                                elem = `<div class="screen__messages-main__chat-item right">
+                                    <div class="screen__messages-main__chat-item__inner">
+                                        <img src="${message}"/>
+                                    </div>
+                                </div>`;
+                            }
                             $(elem).appendTo($('#messages'));
                         });
                         var objDiv = document.getElementById("messages");
