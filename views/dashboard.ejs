@@ -416,17 +416,24 @@
                             var minutes = "0" + date.getMinutes();
                             var formattedTime = hours.substr(-2) + ':' + minutes.substr(-2);
 
+                            // var elem = `
+                            //     <div class="screen__messages-main__chat-item ${ownMessage ? "right" : "left"}">
+                            //         <div class="screen__messages-main__chat-item__inner">
+                            //             <div class="dashboard__content-header__profile"><p id="messagebox_logo">${firstLetter}</p></div>
+                            //             <div class="screen__messages-main__chat-item__inner-texts">
+                            //                 <div class="screen__messages-main__chat-item__inner-texts__header">
+                            //                     <h1>${ownMessage ? "Ty" : item.fromName}</h1>
+                            //                     <h2>${formattedTime}</h2>
+                            //                 </div>
+                            //                 <p>${message}</p>
+                            //             </div>
+                            //         </div>
+                            //     </div>`;
                             var elem = `
-                                <div class="screen__messages-main__chat-item ${ownMessage ? "right" : "left"}">
-                                    <div class="screen__messages-main__chat-item__inner">
-                                        <div class="dashboard__content-header__profile"><p id="messagebox_logo">${firstLetter}</p></div>
-                                        <div class="screen__messages-main__chat-item__inner-texts">
-                                            <div class="screen__messages-main__chat-item__inner-texts__header">
-                                                <h1>${ownMessage ? "Ty" : item.fromName}</h1>
-                                                <h2>${formattedTime}</h2>
-                                            </div>
-                                            <p>${message}</p>
-                                        </div>
+                                <div class="screen__messages-main__chat-item item2 ${ownMessage ? "right" : "left"}">
+                                    ${ownMessage ? "" : `<div class="dashboard__content-header__profile"><p>${firstLetter}</p></div>`}
+                                    <div class="screen__messages-main__chat-item__inner2">
+                                        <p>${message}</p>
                                     </div>
                                 </div>`;
                             $(elem).appendTo($('#messages'));

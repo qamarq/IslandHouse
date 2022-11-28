@@ -427,6 +427,19 @@
                             margin: 10px 0;
                             .dashboard__content-header__profile {margin: 0 10px !important;}
                             width: 100%;
+
+                            &.item2 {
+                                display: flex;
+                                align-items: flex-end;
+                                .dashboard__content-header__profile {
+                                    min-width: 25px;
+                                    min-height: 25px;
+                                    width: 25px;
+                                    height: 25px;
+                                    p {font-size: 12px !important;}
+                                }
+                            }
+
                             &__inner {
                                 max-width: fit-content;
                                 display: flex;
@@ -460,6 +473,24 @@
                                         border-bottom-left-radius: 15px;
                                         border-bottom-right-radius: 15px;
                                     }
+                                }
+                            }
+
+                            &__inner2 {
+                                width: max-content;
+                                p {
+                                    background-color: rgba(255, 255, 255, 0.24);
+                                    padding: 10px;
+                                    font-size: 14px;
+                                    text-align: left;
+                                    max-width: 400px;
+                                    border-radius: 20px;
+                                }
+                            }
+
+                            &.right .screen__messages-main__chat-item__inner2 {
+                                p {
+                                    background: linear-gradient(65deg, rgba(55,71,255,1) 0%, rgba(81,95,255,1) 100%);
                                 }
                             }
 
